@@ -7,3 +7,4 @@ export interface UsersState {
   error: Error | null;
   filter: UsersFilter;
 }
+

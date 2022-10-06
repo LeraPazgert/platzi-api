@@ -1,5 +1,9 @@
 import { FC } from "react";
-import { UserItemProps } from "./types";
+import { IUser } from "../../types";
+
+type UserItemProps = {
+  user: IUser;
+};
 
 const UserItem:FC<UserItemProps> = ({ user }) => {
   return (

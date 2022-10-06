@@ -10,8 +10,14 @@ export class ApiUrlBuilder extends BaseUrlBuilder {
   users(limit: number) {
     return this.buildUrl("/users", { limit });
   }
-  auth() {
+  user() {
+    return this.buildUrl("/users");
+  }
+  authLogin() {
     return this.buildUrl("/auth/login");
+  }
+  authProfile() {
+    return this.buildUrl("/auth/profile");
   }
   categories(limit: number) {
     return this.buildUrl("/categories", { limit });

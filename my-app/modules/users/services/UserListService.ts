@@ -4,7 +4,8 @@ import {
   setIsLoading,
   setUserList,
   setUserListError,
-  setLimit,
+  setFilter,
+  UsersFilter,
 } from "../slices";
 
 export const useUserListService = () => {
@@ -28,12 +29,12 @@ export const useUserListService = () => {
     }
   }, [dispatch, usersApi, filter]);
 
-  const changeLimit = useCallback(
-    (limit: number) => {
-      dispatch(setLimit(limit));
+  const changeFilter = useCallback(
+    (filter: Partial<UsersFilter>) => {
+      dispatch(setFilter(filter));
     },
     [dispatch]
   );
 
-  return { users, loading, error, getUsers, changeLimit };
+  return { users, loading, error, getUsers, changeFilter };
 };

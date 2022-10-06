@@ -3,7 +3,8 @@ import { useEffectOnce } from "react-use";
 import { useUserListService } from "../services";
 
 export const useUserListController = () => {
-  const { users, loading, error, getUsers, changeLimit } = useUserListService();
+  const { users, loading, error, getUsers, changeFilter } =
+    useUserListService();
 
   const load = useCallback(async () => {
     try {
@@ -15,10 +16,10 @@ export const useUserListController = () => {
 
   const changePageSize = useCallback(
     async (limit: number) => {
-      changeLimit(limit);
+      changeFilter({ limit });
       await load();
     },
-    [changeLimit, load]
+    [changeFilter, load]
   );
 
   useEffectOnce(() => {

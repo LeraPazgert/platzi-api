@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../types";
-import { UsersState } from "./types";
+import { UsersFilter, UsersState } from "./types";
 
 const initialState: UsersState = {
   loading: false,
@@ -24,13 +24,15 @@ export const UsersSlice = createSlice({
     setUserListError(state, action: PayloadAction<Error>) {
       state.error = action.payload;
     },
-    setLimit(state, action) {
-      state.filter.limit = action.payload;
+    setFilter(state, action: PayloadAction<Partial<UsersFilter>>) {
+      state.filter ={
+        ...state.filter,
+        ... action.payload
+      };
     },
   },
 });
 
 const { actions, reducer } = UsersSlice;
-
 export default reducer;
-export const { setIsLoading, setUserList, setUserListError, setLimit } = actions;
+export const { setIsLoading, setUserList, setUserListError, setFilter } = actions;

@@ -1,14 +1,11 @@
 import type { NextPage } from 'next'
-import { useApiUrlBuilderContext, useAppUrlBuilderContext } from '../shared/tools'
-
+import { AuthFormView } from '../modules/auth'
 
 const LoginPage: NextPage = () => {
-    const apiUrl = useApiUrlBuilderContext();
-    const appUrl = useAppUrlBuilderContext();
+
     return (
-        <div>
-            <div>{apiUrl.products({ limit: 2, offset: 3 })}</div>
-            <div>{appUrl.login()}</div>
+        <div style={{ backgroundColor: 'rgb(245, 245, 245)' , height:'100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <AuthFormView />
         </div>
 
     )
