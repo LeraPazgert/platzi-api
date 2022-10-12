@@ -18,25 +18,27 @@ export const AuthFormView: FC = () => {
 
     const onSubmit: SubmitHandler<LoginFormData> = (form) => enter(form);
     return (
-        <Card sx={{ minWidth: 375, minHeight: 175 }}>
-            <CardContent sx={{ display: 'flex', justifyContent: 'space-between', gap: '10px', alignItems: 'center', flexDirection: 'column' }}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <FormTextInput
-                        form={form}
-                        label='Email'
-                        variant='outlined'
-                        type='email'
-                        helperText='sksk'
-                        fieldName='email' />
-                    <FormTextInput
-                        form={form}
-                        label='Password'
-                        variant='outlined'
-                        type='password'
-                        helperText='sksk'
-                        fieldName='password' />
-                    <CardActions>
-                        <DefaultButton label='Login' />
+        <Card sx={{ minWidth: 375, minHeight: 175, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <CardContent>
+                <form onSubmit={form.handleSubmit(onSubmit)} style={{ display: 'flex', justifyContent: 'center', gap: '10px', alignItems: 'center', flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', alignItems: 'center', }}>
+                        <FormTextInput
+                            form={form}
+                            label='Email'
+                            variant='outlined'
+                            type='email'
+                            helperText=''
+                            fieldName='email' />
+                        <FormTextInput
+                            form={form}
+                            label='Password'
+                            variant='outlined'
+                            type='password'
+                            helperText=''
+                            fieldName='password' />
+                    </div>
+                    <CardActions style={{ margin: 'auto' }}>
+                        <DefaultButton label='Sign in' />
                     </CardActions>
                 </form>
 

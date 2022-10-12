@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { DefaultApiClientContext } from '../shared/tools/api/contexts'
 import { setupStore } from '../store';
 import { Provider } from 'react-redux';
+import {  AuthorizeController } from '../modules'
 
 
 
@@ -29,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <DefaultApiClientContext.Provider value={contextValues.apiClient}>
           <ApiBuilderContext.Provider value={contextValues.apiUrlBuilder}>
             <AppBuilderContext.Provider value={contextValues.appUrlBuilder}>
+              <AuthorizeController/>
               <Component {...pageProps} />
             </AppBuilderContext.Provider>
           </ApiBuilderContext.Provider>

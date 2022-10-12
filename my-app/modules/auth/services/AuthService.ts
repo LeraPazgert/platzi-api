@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import {
   useAppDispatch,
+  useAppSelector,
   useAuthApi,
   useDefaultLocalStorageContext,
   useUsersApi,
@@ -14,6 +15,7 @@ export const useAuthService = () => {
   const authApi = useAuthApi();
   const userApi = useUsersApi();
   const tokenStorage = useDefaultLocalStorageContext();
+  const { isAuth } = useAppSelector((state) => state.auth);
 
   const login = useCallback(
     async (data: LoginFormData) => {
@@ -24,7 +26,7 @@ export const useAuthService = () => {
         dispatch(setProfile({ isAuth: true, profile: profileData }));
       } catch (e) {
         //store
-        
+
         throw e;
       }
     },
@@ -57,5 +59,19 @@ export const useAuthService = () => {
     }
   }, [dispatch, tokenStorage]);
 
-  return { login, register, logout };
+  const authorize = useCallback(async () => {
+    try {
+      const token = tokenStorage.get();
+      if (token && !isAuth) {
+        const profileData = await authApi.getProfile();
+        dispatch(setProfile({ isAuth: true, profile: profileData }));
+      } else {
+        dispatch(setProfile({ isAuth: false }));
+      }
+    } catch (e) {
+      throw e;
+    }
+  }, [authApi, dispatch, isAuth, tokenStorage]);
+
+  return { login, register, logout, authorize };
 };
