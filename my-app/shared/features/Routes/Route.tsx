@@ -1,7 +1,9 @@
 import Head from 'next/head'
 import { FC, PropsWithChildren } from "react"
+import { LayoutComponent } from '../../components'
 import { useAppSelector } from "../../tools"
 import { RouteData } from "../../types"
+import { LayoutContext } from './context'
 import { PrivateRoute } from './PrivateRoute'
 import { PublicRoute } from './PublicRoute'
 
@@ -10,11 +12,11 @@ type Props = {
     routeData: RouteData
 }
 export const Route: FC<PropsWithChildren<Props>> = ({ routeData, children }) => {
-    const { name, title, isPublic, onlyNonAuth } = routeData;
+    const { name, title, isPublic, onlyNonAuth, layoutType } = routeData;
     const { isAuth } = useAppSelector(state => state.auth);
 
     const RouterWrapper = isPublic ? PublicRoute : PrivateRoute;
-    console.log(isAuth)
+
     if (typeof isAuth !== 'boolean') {
         return <>Loading..!</>
     }
@@ -24,15 +26,19 @@ export const Route: FC<PropsWithChildren<Props>> = ({ routeData, children }) => 
                 <title>{title}</title>
             </Head>
 
-            <RouterWrapper
-                isAuth={isAuth}
-                name={name}
-                title={title}
-                isPublic={isPublic}
-                onlyNonAuth={onlyNonAuth}
-            >
-                {children}
-            </RouterWrapper>
+            <LayoutContext.Provider value={isAuth}>
+                <RouterWrapper
+                    isAuth={isAuth}
+                    name={name}
+                    title={title}
+                    isPublic={isPublic}
+                    layoutType={layoutType}
+                    onlyNonAuth={onlyNonAuth}
+                >
+                    <LayoutComponent layoutType={layoutType}>{children}</LayoutComponent>
+                </RouterWrapper>
+            </LayoutContext.Provider>
+
         </>
     )
 }

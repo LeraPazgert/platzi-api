@@ -33,8 +33,16 @@ export const useAuthController = () => {
     [appUrlBuilder, register, router]
   );
 
+  const exit = useCallback(async () => {
+    try {
+      await logout();
+      router.push(appUrlBuilder.login());
+    } catch {}
+  }, [appUrlBuilder, logout, router]);
+
   return {
     enter,
     registration,
+    exit,
   };
 };

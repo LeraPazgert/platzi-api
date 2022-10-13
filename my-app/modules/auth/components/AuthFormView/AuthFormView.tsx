@@ -18,7 +18,7 @@ export const AuthFormView: FC = () => {
 
     const onSubmit: SubmitHandler<LoginFormData> = (form) => enter(form);
     return (
-        <Card sx={{ minWidth: 375, minHeight: 175, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Card sx={{ width: '100%', height:'100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <CardContent>
                 <form onSubmit={form.handleSubmit(onSubmit)} style={{ display: 'flex', justifyContent: 'center', gap: '10px', alignItems: 'center', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', alignItems: 'center', }}>

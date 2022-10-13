@@ -5,12 +5,12 @@ import { useMemo } from 'react'
 import { DefaultApiClientContext } from '../shared/tools/api/contexts'
 import { setupStore } from '../store';
 import { Provider } from 'react-redux';
-import {  AuthorizeController } from '../modules'
+import { AuthorizeController } from '../modules'
 
 
+const store = setupStore();
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const store = setupStore();
   const contextValues = useMemo(() => {
     const localStorageClient = typeof localStorage === 'object' ?
       new DefaultStorageClient('access_token', localStorage) :
@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <DefaultApiClientContext.Provider value={contextValues.apiClient}>
           <ApiBuilderContext.Provider value={contextValues.apiUrlBuilder}>
             <AppBuilderContext.Provider value={contextValues.appUrlBuilder}>
-              <AuthorizeController/>
+              <AuthorizeController />
               <Component {...pageProps} />
             </AppBuilderContext.Provider>
           </ApiBuilderContext.Provider>

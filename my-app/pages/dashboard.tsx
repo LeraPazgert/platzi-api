@@ -7,6 +7,7 @@ const Dashboard: NextPage = () => {
             name: 'dashboard',
             title: 'Dashboard',
             isPublic: false,
+            layoutType: 'private',
             onlyNonAuth: false
         }}> </Route>
 

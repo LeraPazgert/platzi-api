@@ -9,6 +9,7 @@ const RegisterPage: NextPage = () => {
         name: 'register',
         title: 'Register',
         isPublic: true,
+        layoutType: 'auth',
         onlyNonAuth: true
       }}>  <RegisterFormView /></Route>
       

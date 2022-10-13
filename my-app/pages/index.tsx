@@ -8,6 +8,7 @@ const Home: NextPage = () => {
       name: 'home',
       title: 'Home',
       isPublic: true,
+      layoutType: 'public',
       onlyNonAuth: false
     }}> <UsersListView /></Route>
 

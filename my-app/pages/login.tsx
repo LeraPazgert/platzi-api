@@ -9,6 +9,7 @@ const LoginPage: NextPage = () => {
                 name: 'login',
                 title: 'Login',
                 isPublic: true,
+                layoutType: 'auth',
                 onlyNonAuth: true
             }}> <AuthFormView /></Route>
         </div>

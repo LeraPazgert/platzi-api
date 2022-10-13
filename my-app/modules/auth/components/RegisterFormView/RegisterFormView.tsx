@@ -22,7 +22,7 @@ export const RegisterFormView: FC = () => {
   const onSubmit: SubmitHandler<RegisterFormData> = (form) => registration(form);
 
   return (
-    <Card sx={{ minWidth: 375, minHeight: 175 }}>
+    <Card sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <CardContent>
         <form onSubmit={form.handleSubmit(onSubmit)} style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
           <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
