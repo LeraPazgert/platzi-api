@@ -6,3 +6,4 @@ export * from "./AuthLayout";
 export * from "./PrivateHeader";
 export * from "./PrivateFooter";
 export * from "./LayoutComponent";
+export * from "./types";

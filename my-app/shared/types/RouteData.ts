@@ -1,7 +1,9 @@
+import { LayoutType } from "../components";
+
 export type RouteData = {
   name: string;
   title: string;
   isPublic: boolean;
-  layoutType: string;
+  layoutType: LayoutType;
   onlyNonAuth: boolean;
 };

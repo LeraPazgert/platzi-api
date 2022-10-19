@@ -2,10 +2,11 @@ import React, { FC } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { DefaultButton, FormTextInput } from '../../../../shared';
+import { Button, EmailPattern, FormTextInput, PasswordPattern } from '../../../../shared';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginFormData } from '../../types';
 import { useAuthController } from '../../controllers';
+
 
 export const AuthFormView: FC = () => {
     const { enter } = useAuthController();
@@ -13,12 +14,14 @@ export const AuthFormView: FC = () => {
         defaultValues: {
             email: '',
             password: ''
-        }
+        },
+        mode: "onChange",
+        reValidateMode: "onChange"
     });
 
     const onSubmit: SubmitHandler<LoginFormData> = (form) => enter(form);
     return (
-        <Card sx={{ width: '100%', height:'100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Card sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <CardContent>
                 <form onSubmit={form.handleSubmit(onSubmit)} style={{ display: 'flex', justifyContent: 'center', gap: '10px', alignItems: 'center', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', alignItems: 'center', }}>
@@ -28,17 +31,31 @@ export const AuthFormView: FC = () => {
                             variant='outlined'
                             type='email'
                             helperText=''
-                            fieldName='email' />
+                            fieldName='email'
+                            registerOptions={{
+                                required: 'Email is required',
+                                pattern: {
+                                    value: EmailPattern,
+                                    message: 'Invalid email'
+                                }
+                            }} />
                         <FormTextInput
                             form={form}
                             label='Password'
                             variant='outlined'
                             type='password'
                             helperText=''
-                            fieldName='password' />
+                            fieldName='password'
+                            registerOptions={{
+                                required: 'Password is required',
+                                pattern: {
+                                    value: PasswordPattern,
+                                    message: 'Invalid password'
+                                }
+                            }} />
                     </div>
                     <CardActions style={{ margin: 'auto' }}>
-                        <DefaultButton label='Sign in' />
+                        <Button label='Sign in' type='submit' />
                     </CardActions>
                 </form>
 

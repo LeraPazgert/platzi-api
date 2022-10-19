@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 export const PrivateFooter = () => {
     return (
-        <Box sx={{ position: 'absolute', bottom: 0 }}>
+        <Box>
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="overline" component="div">

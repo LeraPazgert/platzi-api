@@ -1,22 +1,25 @@
-import { FC, PropsWithChildren } from "react"
-import { useLayoutContext } from "../../features"
+import { FC, PropsWithChildren, useMemo } from "react"
 import { AuthLayout } from "./AuthLayout"
 import { PrivateLayout } from "./PrivateLayout"
 import { PublicLayout } from "./PublicLayout"
+import { LayoutType } from "./types"
 
 type Props = {
-    layoutType: string;
+    layoutType: LayoutType;
 }
+
+const layouts: Record<LayoutType, FC<PropsWithChildren>> = {
+    'public': PublicLayout,
+    'private': PrivateLayout,
+    'auth': AuthLayout
+}
+
 export const LayoutComponent: FC<PropsWithChildren<Props>> = ({ layoutType, children }) => {
-    const isAuth = useLayoutContext();
 
+    const Layout = useMemo(() => {
+        return layouts[layoutType]
+    }, [layoutType]);
 
-    if (layoutType === 'public' && !isAuth) {
-        return <PublicLayout>{children}</PublicLayout>
-    } else if (layoutType === 'private' || isAuth) {
-        return <PrivateLayout>{children}</PrivateLayout>
-    } else if (layoutType === 'auth') {
-        return <AuthLayout>{children}</AuthLayout>
-    }
-    return null
+    return <Layout>{children}</Layout>;
+
 }

@@ -7,7 +7,7 @@ const initialState: UsersState = {
   error: null,
   users: [],
   filter: {
-    limit: 10,
+    limit: 25,
   },
 };
 

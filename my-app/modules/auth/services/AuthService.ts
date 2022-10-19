@@ -4,16 +4,18 @@ import {
   useAppSelector,
   useAuthApi,
   useDefaultLocalStorageContext,
+  useFilesApi,
   useUsersApi,
 } from "../../../shared";
-import { LoginFormData } from "../types";
+import { LoginFormData, RegisterFormData } from "../types";
 import { exit, setProfile } from "../slices";
-import { IUserCreateRequest } from "../../users";
+
 
 export const useAuthService = () => {
   const dispatch = useAppDispatch();
   const authApi = useAuthApi();
   const userApi = useUsersApi();
+  const filesApi = useFilesApi();
   const tokenStorage = useDefaultLocalStorageContext();
   const { isAuth } = useAppSelector((state) => state.auth);
 
@@ -34,9 +36,14 @@ export const useAuthService = () => {
   );
 
   const register = useCallback(
-    async (data: IUserCreateRequest) => {
+    async (data: RegisterFormData) => {
       try {
-        const user = await userApi.createUser(data);
+        console.log(data.avatar)
+        const formData = new FormData();
+        formData.append("file", data.avatar, data.avatar.name);
+
+        const image = await filesApi.uploadFile(formData);
+        const user = await userApi.createUser({ ...data, avatar: image.location });
         const token = await authApi.signIn({
           email: data.email,
           password: data.password,
@@ -47,7 +54,7 @@ export const useAuthService = () => {
         throw e;
       }
     },
-    [authApi, dispatch, tokenStorage, userApi]
+    [authApi, dispatch, filesApi, tokenStorage, userApi]
   );
 
   const logout = useCallback(async () => {

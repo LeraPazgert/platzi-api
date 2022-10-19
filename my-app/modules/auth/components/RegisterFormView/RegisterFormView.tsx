@@ -2,7 +2,7 @@ import { FC } from "react";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { DefaultButton, FormTextInput } from '../../../../shared';
+import { Button, DropdownInput, EmailPattern, FormTextInput, PasswordPattern, UploadButton } from '../../../../shared';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { RegisterFormData } from "../../types";
 import { useAuthController } from "../../controllers";
@@ -15,8 +15,10 @@ export const RegisterFormView: FC = () => {
       password: "",
       name: "",
       role: "",
-      avatar: "",
+      avatar:undefined
     },
+    mode: "onChange",
+    reValidateMode: "onChange"
   });
 
   const onSubmit: SubmitHandler<RegisterFormData> = (form) => registration(form);
@@ -32,38 +34,67 @@ export const RegisterFormView: FC = () => {
               variant='outlined'
               type='email'
               helperText=''
-              fieldName='email' />
+              fieldName='email'
+              registerOptions={{
+                required: 'Email is required',
+                pattern: {
+                  value: EmailPattern,
+                  message: 'Invalid email'
+                }
+              }} />
             <FormTextInput
               form={form}
               label='Password'
               variant='outlined'
               type='password'
               helperText=''
-              fieldName='password' />
+              fieldName='password'
+              registerOptions={{
+                required: 'Password is required',
+                pattern: {
+                  value: PasswordPattern,
+                  message: 'Invalid password'
+                }
+              }} />
             <FormTextInput
               form={form}
               label='Name'
               variant='outlined'
               type='text'
               helperText=''
-              fieldName='name' />
-            <FormTextInput
+              fieldName='name'
+              registerOptions={{
+                required: 'Name is required',
+                minLength: {
+                  value: 2,
+                  message: 'Min 2 letters'
+                },
+                maxLength: {
+                  value: 10,
+                  message: 'Max 10 letters'
+                }
+              }} />
+            <DropdownInput
               form={form}
               label='Role'
-              variant='outlined'
-              type='text'
+              fieldName='role'
               helperText=''
-              fieldName='role' />
-            <FormTextInput
+              options={[{ label: 'Admin', value: 'admin' }, { label: 'Customer', value: 'customer' }]}
+              registerOptions={{
+                required: 'Role is required',
+              }}
+            />
+            <UploadButton
               form={form}
               label='Avatar'
-              variant='outlined'
-              type='text'
-              helperText=''
-              fieldName='avatar' />
+              fieldName='avatar'
+              registerOptions={{
+                required: 'Avatar is required',
+              }}
+            />
           </div>
           <CardActions style={{ margin: 'auto' }}>
-            <DefaultButton label='Register' />
+            <Button label='Register' type='submit' />
           </CardActions>
         </form>
       </CardContent>

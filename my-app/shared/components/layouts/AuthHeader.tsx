@@ -1,27 +1,19 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { useRouter } from 'next/router';
 import { useAppUrlBuilderContext } from '../../tools';
-import { DefaultButton } from '../DefaultButton';
+import { LinkButton } from '../buttons';
+
 
 export const AuthHeader = () => {
-    const router = useRouter();
     const appUrlBuilder = useAppUrlBuilderContext();
-
-    const handleRegister = () => {
-        router.push(appUrlBuilder.register())
-    }
-    const handleHome = () => {
-        router.push(appUrlBuilder.home())
-    }
 
     return (
         <Box
             sx={{
                 width: '100%',
                 height: '100vh',
-                backgroundColor: 'rgb(84, 96, 115)',
-                color: 'rgb(209, 214, 222)',
+                backgroundColor: (theme) => theme.palette.grey[500],
+                color: (theme) => theme.palette.grey[100],
                 display: 'flex', alignItems: 'center', flexDirection: 'column',
                 justifyContent: 'center', gap: '20px',
                 '&:hover': {
@@ -39,8 +31,8 @@ export const AuthHeader = () => {
             <Typography variant="overline" component="div" align='center'>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </Typography>
-            <DefaultButton label='Registration' handleClick={handleRegister} />
-            <DefaultButton label='Home' handleClick={handleHome} />
+            <LinkButton href={appUrlBuilder.register()}>Registration</LinkButton>
+            <LinkButton href={appUrlBuilder.home()}>Home</LinkButton>
         </Box>
     )
 

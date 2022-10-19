@@ -3,7 +3,6 @@ import { FC, PropsWithChildren } from "react"
 import { LayoutComponent } from '../../components'
 import { useAppSelector } from "../../tools"
 import { RouteData } from "../../types"
-import { LayoutContext } from './context'
 import { PrivateRoute } from './PrivateRoute'
 import { PublicRoute } from './PublicRoute'
 
@@ -26,18 +25,16 @@ export const Route: FC<PropsWithChildren<Props>> = ({ routeData, children }) => 
                 <title>{title}</title>
             </Head>
 
-            <LayoutContext.Provider value={isAuth}>
-                <RouterWrapper
-                    isAuth={isAuth}
-                    name={name}
-                    title={title}
-                    isPublic={isPublic}
-                    layoutType={layoutType}
-                    onlyNonAuth={onlyNonAuth}
-                >
-                    <LayoutComponent layoutType={layoutType}>{children}</LayoutComponent>
-                </RouterWrapper>
-            </LayoutContext.Provider>
+            <RouterWrapper
+                isAuth={isAuth}
+                name={name}
+                title={title}
+                isPublic={isPublic}
+                layoutType={layoutType}
+                onlyNonAuth={onlyNonAuth}
+            >
+                <LayoutComponent layoutType={layoutType}>{children}</LayoutComponent>
+            </RouterWrapper>
 
         </>
     )

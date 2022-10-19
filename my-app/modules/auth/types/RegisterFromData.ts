@@ -5,5 +5,5 @@ export interface RegisterFormData extends FieldValues {
   password: string;
   name: string;
   role: string;
-  avatar: string;
+  avatar: File;
 }

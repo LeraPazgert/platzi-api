@@ -7,11 +7,11 @@ import Typography from '@mui/material/Typography';
 
 export const PublicFooter = () => {
     return (
-        <Box sx={{ position: 'absolute',bottom:0 }}>
+        <Box>
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="overline" component="div">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores laborum at aut aliquid tempore beatae eveniet quod nulla optio maxime alias, repellat incidunt dicta nesciunt totam dolorum qui? Rem nulla quo sequi sapiente esse qui enim similique!
+                       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga atque officia unde? Natus, consequatur! Eaque unde a, amet obcaecati alias atque libero corrupti est non rerum perferendis harum error commodi earum excepturi fugit consequuntur placeat. Dolores id hic quam ex atque ab. Labore vitae maxime sit numquam possimus temporibus at!
                     </Typography>
                 </Toolbar>
             </AppBar>
