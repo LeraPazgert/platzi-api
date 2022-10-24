@@ -7,6 +7,9 @@ export class ApiUrlBuilder extends BaseUrlBuilder {
   product(id: number) {
     return this.buildUrl(`/product/${id}`);
   }
+  setProducts(){
+    return this.buildUrl("/products");
+  }
   users(limit: number) {
     return this.buildUrl("/users", { limit });
   }

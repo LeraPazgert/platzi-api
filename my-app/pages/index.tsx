@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { UsersListView } from '../modules/users';
+import { ProductListView } from '../modules/products';
 import { Route } from '../shared';
 
 const Home: NextPage = () => {
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
       isPublic: true,
       layoutType: 'public',
       onlyNonAuth: false
-    }}> <UsersListView /></Route>
+    }}> <ProductListView /></Route>
 
   )
 }
