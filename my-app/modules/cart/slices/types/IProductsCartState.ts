@@ -1,5 +1,6 @@
-import { IProduct } from "../../../products";
+import { ICartProduct } from "../../types";
 
 export interface IProductsCartState {
-  addedProducts: IProduct[];
+  addedProducts: ICartProduct[];
+  isOpen: boolean;
 }

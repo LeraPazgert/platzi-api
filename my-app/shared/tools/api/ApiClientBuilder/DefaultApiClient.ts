@@ -1,4 +1,4 @@
-import axios, { Method } from "axios";
+import axios, { AxiosError, Method } from "axios";
 import { DefaultStorageClient } from "../../storage";
 import { ApiClient } from "./ApiClient";
 
@@ -9,6 +9,8 @@ export class DefaultApiClient implements ApiClient {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
   };
+  errorHandler?(e: AxiosError): void;
+
   constructor(localStorage: DefaultStorageClient) {
     this.localStorageClient = localStorage;
   }
@@ -18,6 +20,9 @@ export class DefaultApiClient implements ApiClient {
     return token
       ? { ...this.headers, Authorization: `Bearer ${token}` }
       : this.headers;
+  }
+  public setErrorHandler(errorHandler: (e: AxiosError) => void) {
+    this.errorHandler = errorHandler;
   }
 
   public async request<T, TResult = T>({
@@ -42,6 +47,7 @@ export class DefaultApiClient implements ApiClient {
         return response.data;
       })
       .catch((e) => {
+       this.errorHandler?.(e);
         throw e;
       });
   }

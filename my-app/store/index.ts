@@ -1,13 +1,15 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import usersReducer from "../modules/users/slices/UsersSlice";
-import authReducer from "../modules/auth/slices/AuthSlice";
-import productsReducer from "../modules/products/slices/ProductsSlice";
-import cartReduser from "../modules/cart/slices/CartSlice";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import authReducer from '../modules/auth/slices/AuthSlice';
+import cartReduser from '../modules/cart/slices/CartSlice';
+import productReducer from '../modules/products/slices/ProductDetailsSlice';
+import productsReducer from '../modules/products/slices/ProductsSlice';
+import usersReducer from '../modules/users/slices/UsersSlice';
 
 const rootReducer = combineReducers({
   users: usersReducer,
   auth: authReducer,
   products: productsReducer,
+  product: productReducer,
   cart: cartReduser,
 });
 
@@ -19,4 +21,4 @@ export function setupStore() {
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore["dispatch"];
+export type AppDispatch = AppStore['dispatch'];

@@ -10,7 +10,6 @@ import {
 import { LoginFormData, RegisterFormData } from "../types";
 import { exit, setProfile } from "../slices";
 
-
 export const useAuthService = () => {
   const dispatch = useAppDispatch();
   const authApi = useAuthApi();
@@ -18,6 +17,7 @@ export const useAuthService = () => {
   const filesApi = useFilesApi();
   const tokenStorage = useDefaultLocalStorageContext();
   const { isAuth } = useAppSelector((state) => state.auth);
+
 
   const login = useCallback(
     async (data: LoginFormData) => {
@@ -38,12 +38,15 @@ export const useAuthService = () => {
   const register = useCallback(
     async (data: RegisterFormData) => {
       try {
-        console.log(data.avatar)
+        console.log(data.avatar);
         const formData = new FormData();
         formData.append("file", data.avatar, data.avatar.name);
 
         const image = await filesApi.uploadFile(formData);
-        const user = await userApi.createUser({ ...data, avatar: image.location });
+        const user = await userApi.createUser({
+          ...data,
+          avatar: image.location,
+        });
         const token = await authApi.signIn({
           email: data.email,
           password: data.password,

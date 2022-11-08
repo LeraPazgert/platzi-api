@@ -1,34 +1,34 @@
-import { BaseUrlBuilder } from "./BaseUrlBuilder";
+import { BaseUrlBuilder } from './BaseUrlBuilder';
 
 export class ApiUrlBuilder extends BaseUrlBuilder {
   products({ limit, offset }: { limit: number; offset: number }) {
-    return this.buildUrl("/products", { limit, offset });
+    return this.buildUrl('/products', { limit, offset });
   }
   product(id: number) {
-    return this.buildUrl(`/product/${id}`);
+    return this.buildUrl(`/products/${id}`);
   }
-  setProducts(){
-    return this.buildUrl("/products");
+  setProducts() {
+    return this.buildUrl('/products');
   }
   users(limit: number) {
-    return this.buildUrl("/users", { limit });
+    return this.buildUrl('/users', { limit });
   }
   user() {
-    return this.buildUrl("/users");
+    return this.buildUrl('/users');
   }
   authLogin() {
-    return this.buildUrl("/auth/login");
+    return this.buildUrl('/auth/login');
   }
   authProfile() {
-    return this.buildUrl("/auth/profile");
+    return this.buildUrl('/auth/profile');
   }
   categories(limit: number) {
-    return this.buildUrl("/categories", { limit });
+    return this.buildUrl('/categories', { limit });
   }
   category(id: number) {
     return this.buildUrl(`/categories/${id}`);
   }
   files() {
-    return this.buildUrl("/files/upload");
+    return this.buildUrl('/files/upload');
   }
 }

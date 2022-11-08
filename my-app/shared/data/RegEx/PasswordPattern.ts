@@ -1,1 +1,1 @@
-export const PasswordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/;
+export const PasswordPattern = /^(?=.*\d)(?=.*[a-z]).{6,15}$/;

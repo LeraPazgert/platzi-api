@@ -23,11 +23,10 @@ export const useProductsApi = () => {
           url: apiUrlBuilder.setProducts(),
           data: product,
         }),
-      getProduct: (id: number) => {
+      getProduct: (id: number) =>
         apiClient.get<IProduct>({
           url: apiUrlBuilder.product(id),
-        });
-      },
+        }),
     }),
     [apiClient, apiUrlBuilder]
   );
