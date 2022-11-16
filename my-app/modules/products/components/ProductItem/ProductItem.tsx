@@ -12,10 +12,10 @@ import {
 import Link from 'next/link';
 import { FC } from 'react';
 import { useAppSelector, useAppUrlBuilderContext } from '../../../../shared';
+import { Picture } from '../../../../shared/components/image';
 import Slider from '../../../../shared/components/slider/Slider';
 import { useCartController } from '../../../cart';
 import { IProduct } from '../../types';
-import { Slide } from '../Slide';
 
 type Props = {
   product: IProduct;
@@ -28,45 +28,48 @@ export const ProductItem: FC<Props> = ({ product }) => {
 
   return (
     <Card sx={{ maxWidth: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Link href={appUrlBuilder.productDetails(product.id)}>
+      <Box
+        sx={{
+          position: 'relative',
+          textAlign: 'center',
+          color: 'white',
+        }}
+      >
+        <Slider
+          items={product.images.map((img, i) => (
+            <Picture image={img} key={i} />
+          ))}
+        />
         <Box
           sx={{
-            position: 'relative',
-            textAlign: 'center',
-            color: 'white',
+            position: 'absolute',
+            padding: '0 5px 5px 5px',
+            top: '8px',
+            left: '16px',
+            minWidth: '25px',
+            backgroundColor: 'rgb(5,5,5,0.2)',
+            borderRadius: '5px',
           }}
         >
-          <Slider
-            items={product.images.map((img, i) => (
-              <Slide image={img} key={i} />
-            ))}
-          />
-          <Box
-            sx={{
-              position: 'absolute',
-              padding: '0 5px 5px 5px',
-              top: '8px',
-              left: '16px',
-              minWidth: '25px',
-              backgroundColor: 'rgb(5,5,5,0.2)',
-              borderRadius: '5px',
-            }}
-          >
-            <Typography variant="caption" sx={{ fontSize: '13px' }}>
-              {product.category.name}
-            </Typography>
-          </Box>
+          <Typography variant="caption" sx={{ fontSize: '13px' }}>
+            {product.category.name}
+          </Typography>
         </Box>
-      </Link>
+      </Box>
 
       <CardContent sx={{ flex: '1 1' }}>
-        <Typography
-          variant="overline"
-          sx={{ borderBottom: '1px solid', borderColor: theme => theme.palette.secondary.main }}
-        >
-          {product.title}
-        </Typography>
-
+        <Link href={appUrlBuilder.productDetails(product.id)}>
+          <Typography
+            variant="overline"
+            sx={{
+              borderBottom: '1px solid',
+              borderColor: theme => theme.palette.secondary.main,
+              ':hover': { cursor: 'pointer' },
+            }}
+          >
+            {product.title}
+          </Typography>
+        </Link>
         <Typography
           variant="body1"
           sx={{ fontSize: '15px', textAlign: 'right', marginTop: '10px' }}

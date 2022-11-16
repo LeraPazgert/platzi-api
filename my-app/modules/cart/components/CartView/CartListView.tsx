@@ -11,9 +11,11 @@ export const CartListView = () => {
     items.reduce((acc, item) => acc + item.amount * item.price, 0);
 
   return (
-    <Box sx={{ width: '500px', overflowX: 'hidden' }}>
+    <Box sx={{ width: '500px', overflowX: 'hidden', margin: '20px 30px' }}>
       {addedProducts.length === 0 ? (
-        <Typography variant="h5">No items in cart.</Typography>
+        <Typography variant="h5" sx={{ margin: '20px 30px' }}>
+          No items in your cart.
+        </Typography>
       ) : (
         <Typography variant="h4" sx={{ margin: '20px 30px' }} color="GrayText">
           Your Cart

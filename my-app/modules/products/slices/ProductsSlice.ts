@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICategory } from '../../../shared';
 import { IProduct } from '../types';
 import { ProductsFilter, ProductsState } from './types';
 
@@ -8,15 +7,14 @@ const initialState: ProductsState = {
   error: null,
   products: [],
   filter: {
-    limit: 24,
+    limit: 25,
     offset: 0,
     sort: '',
-    category: {
-      name: '',
-      checked: false,
-    },
+    categories: [],
+    text: '',
+    prices: [0, 1000],
   },
-  categories: [],
+  filteredProducts: [],
 };
 
 export const ProductsSlice = createSlice({
@@ -28,6 +26,7 @@ export const ProductsSlice = createSlice({
     },
     setProductsList(state, action: PayloadAction<IProduct[]>) {
       state.products = action.payload;
+      state.filteredProducts = action.payload;
     },
     setProductsListError(state, action: PayloadAction<Error>) {
       state.error = action.payload;
@@ -38,56 +37,66 @@ export const ProductsSlice = createSlice({
         ...action.payload,
       };
 
-      const sortedProducts = sortProducts(state.products, state.filter.sort);
-      state.products = sortedProducts;
-    },
-    setCategoriesList(state, action: PayloadAction<ICategory[]>) {
-      state.categories = action.payload;
+      const products = [...state.products];
+      const foundProducts = searchProducts(products, state.filter.text);
+      const sortedProducts = sortProducts(foundProducts, state.filter.sort);
+      const filteredByCategory = filterByCategory(sortedProducts, state.filter.categories);
+      const filteredByPrice = filterByPrice(filteredByCategory, state.filter.prices);
+      state.filteredProducts = filteredByPrice;
     },
   },
 });
 
 const { actions, reducer } = ProductsSlice;
 export default reducer;
-export const { setIsLoading, setProductsList, setProductsListError, setFilter, setCategoriesList } =
-  actions;
+export const { setIsLoading, setProductsList, setProductsListError, setFilter } = actions;
 
-const sortProducts = (initProducts: IProduct[], sort: string) => {
-  const products = [...initProducts];
-
-  console.log(sort);
-
-  switch (sort) {
-    case 'name,asc':
-      return products.sort((a, b) => {
-        return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;
-      });
-    case 'name,desc':
-      return products.sort((a, b) => {
-        return b.title.toLowerCase() > a.title.toLowerCase() ? 1 : -1;
-      });
-
-    /*  case 'name,asc':
-      return products.sort((objA, objB) => {
-        return objA.price - objB.price;
-      });
-
-    case 'name,desc':
-      return products.sort((objA, objB) => {
-        return objB.price - objA.price;
-      }); */
-
-    default:
-      return products;
+const searchProducts = (initProducts: IProduct[], text: string) => {
+  if (text === '' || text.length < 3) {
+    return initProducts;
+  } else {
+    return initProducts.filter(item =>
+      (item.title || '').toLowerCase().includes(text.toLowerCase()),
+    );
   }
 };
 
-const sortCategory = (initProducts: IProduct[], category: string) => {
-  const products = [...initProducts];
+const sortProducts = (initProducts: IProduct[], sort: string) => {
+  switch (sort) {
+    case 'name,asc':
+      return initProducts.sort((a, b) => {
+        return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;
+      });
+    case 'name,desc':
+      return initProducts.sort((a, b) => {
+        return b.title.toLowerCase() > a.title.toLowerCase() ? 1 : -1;
+      });
+    case 'price,asc':
+      return initProducts.sort((objA, objB) => {
+        return objA.price - objB.price;
+      });
 
-  console.log(category);
+    case 'price,desc':
+      return initProducts.sort((objA, objB) => {
+        return objB.price - objA.price;
+      });
 
-  return products.filter(item => {
-    return item.category.name === category;
-  });
+    default:
+      return initProducts;
+  }
+};
+
+const filterByCategory = (initProducts: IProduct[], categories: number[]) => {
+  if (categories.length) {
+    return initProducts.filter(item => categories.includes(item.category.id));
+  } else {
+    return initProducts;
+  }
+};
+const filterByPrice = (initProducts: IProduct[], prices: number[]) => {
+  if (prices.length) {
+    return initProducts.filter(item => item.price >= prices[0] && item.price <= prices[1]);
+  } else {
+    return initProducts;
+  }
 };

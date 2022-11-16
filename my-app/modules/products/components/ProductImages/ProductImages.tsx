@@ -1,12 +1,18 @@
 import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import noImage from '../../../../shared/assets/images/noimage.jpg';
 import { IProduct } from '../../types';
 
 type Props = {
   product: IProduct;
 };
 export const ProductImages: FC<Props> = ({ product }) => {
+  const [state, setState] = useState('');
+
+  const handleError = () => {
+    setState(noImage);
+  };
   return (
     <Box
       sx={{

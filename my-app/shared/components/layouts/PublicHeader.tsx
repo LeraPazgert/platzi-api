@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { FC, ReactNode } from 'react';
 import { useAuthController } from '../../../modules';
 import { useCartController } from '../../../modules/cart/controllers/CartListController';
-import pandaLogo from '../../assets/images/panda-logo.svg';
+import logo from '../../assets/images/kiss-technology.svg';
 import { useAppSelector, useAppUrlBuilderContext } from '../../tools';
 import { Button, LinkButton } from '../buttons';
 
@@ -24,7 +24,7 @@ export const PublicHeader = () => {
       sx={{
         padding: '5px 20px 5px 20px',
         marginBottom: '20px',
-        backgroundColor: theme => theme.palette.info.main,
+        backgroundColor: theme => theme.palette.primary.light,
         marginLeft: 0,
         display: 'flex',
         flexDirection: 'column',
@@ -50,7 +50,7 @@ export const PublicHeader = () => {
           }}
         >
           <Grid item sx={{ paddingTop: '10px' }}>
-            <img src={pandaLogo} width="70px" height="70px" />
+            <img src={logo} width="70px" height="70px" />
           </Grid>
 
           <Grid item sx={{ marginLeft: '20px' }}>
@@ -97,7 +97,7 @@ export const PublicHeader = () => {
                 >
                   <ShoppingCartIcon
                     onClick={() => changeCartOpen(true)}
-                    sx={{ fontSize: '35px' }}
+                    sx={{ fontSize: '35px', ':hover': { cursor: 'pointer' } }}
                   />
                 </Badge>
               </Tooltip>
@@ -123,7 +123,7 @@ export const PublicHeader = () => {
             fontSize: '13px',
           }}
         >
-          PANDA MARKET
+          YOUR MARKET
         </Typography>
       </Grid>
     </AppBar>

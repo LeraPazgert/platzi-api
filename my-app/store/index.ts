@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from '../modules/auth/slices/AuthSlice';
-import cartReduser from '../modules/cart/slices/CartSlice';
+import cartReducer from '../modules/cart/slices/CartSlice';
+import categoriesReducer from '../modules/categories/slices/CategoriesSlice';
 import productReducer from '../modules/products/slices/ProductDetailsSlice';
 import productsReducer from '../modules/products/slices/ProductsSlice';
 import usersReducer from '../modules/users/slices/UsersSlice';
@@ -10,7 +11,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   products: productsReducer,
   product: productReducer,
-  cart: cartReduser,
+  cart: cartReducer,
+  categories: categoriesReducer,
 });
 
 export function setupStore() {

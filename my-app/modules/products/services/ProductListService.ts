@@ -3,13 +3,11 @@ import { useStore } from 'react-redux';
 import {
   useAppDispatch,
   useAppSelector,
-  useCategoriesApi,
   useProductsApi,
 } from '../../../shared';
 import { RootState } from '../../../store';
 import {
   ProductsFilter,
-  setCategoriesList,
   setFilter,
   setIsLoading,
   setProductsList,
@@ -19,10 +17,11 @@ import {
 export const useProductListService = () => {
   const { getState } = useStore<RootState>();
   const dispatch = useAppDispatch();
-  const { products, loading, error, filter } = useAppSelector(state => state.products);
+  const { products, loading, error, filter, filteredProducts } = useAppSelector(
+    state => state.products,
+  );
 
   const productsApi = useProductsApi();
-  const categoriesApi = useCategoriesApi();
 
   const getProducts = useCallback(async () => {
     dispatch(setIsLoading(true));
@@ -46,17 +45,5 @@ export const useProductListService = () => {
     [dispatch],
   );
 
-  const getCategories = useCallback(
-    async (limit: number) => {
-      try {
-        const categories = await categoriesApi.getCategories(limit);
-        dispatch(setCategoriesList(categories));
-      } catch (e) {
-        throw e;
-      }
-    },
-    [categoriesApi, dispatch],
-  );
-
-  return { products, loading, error, filter, getProducts, changeFilter, getCategories };
+  return { products, loading, error, filter, getProducts, changeFilter, filteredProducts };
 };

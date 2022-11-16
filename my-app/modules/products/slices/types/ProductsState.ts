@@ -7,5 +7,5 @@ export interface ProductsState {
   loading: boolean;
   error: Error | null;
   filter: ProductsFilter;
-  categories: ICategory[];
+  filteredProducts: IProduct[];
 }

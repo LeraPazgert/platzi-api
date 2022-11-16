@@ -5,3 +5,4 @@ export * from './dropdown';
 export * from './slider';
 export * from './loading';
 export * from './pagination';
+export * from './sortGroup';

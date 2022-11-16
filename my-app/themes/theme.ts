@@ -9,6 +9,27 @@ export const theme = createTheme({
         },
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          fontFamily: 'Dosis, sans-serif',
+        },
+      },
+    },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        label: {
+          fontFamily: 'Dosis, sans-serif',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        outlined: {
+          fontFamily: 'Dosis, sans-serif',
+        },
+      },
+    },
     MuiTablePagination: {
       styleOverrides: {
         root: {
@@ -23,22 +44,26 @@ export const theme = createTheme({
         selectIcon: {
           display: 'none',
         },
+        select: {
+          display: 'none',
+        },
       },
     },
   },
   palette: {
     primary: {
-      main: '#F2ADC5',
-      dark: '#D88BA9',
+      main: '#d6c5ad',
+      light: '#bac7d1',
+      dark: '#8396b1',
     },
     secondary: {
-      main: '#89DBEF',
-      dark: '#16AFC4',
+      main: '#6B99C3',
+      dark: '#022E66',
     },
     info: {
-      main: '#d8d6d8',
-      light: '#C9D1CF',
-      dark: '#2F423F',
+      main: '#d4ba9a',
+      light: '#d7cdbf',
+      dark: '#1d2941',
       contrastText: '#88A795',
     },
   },

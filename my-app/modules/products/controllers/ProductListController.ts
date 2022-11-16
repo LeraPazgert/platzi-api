@@ -2,19 +2,15 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 import { useEffectOnce } from 'react-use';
 import { useAppUrlBuilderContext } from '../../../shared';
+import { useCategoriesListService } from '../../categories/services/CategoriesListService';
 import { useProductListService } from '../services';
 
 export const useProductListController = () => {
-  const { products, loading, error, filter, getProducts, changeFilter, getCategories } =
+  const { products, loading, error, filter, getProducts, changeFilter, filteredProducts } =
     useProductListService();
+  const { getCategories } = useCategoriesListService();
   const router = useRouter();
   const appUrl = useAppUrlBuilderContext();
-
-  /* const [page, setPage] = useState(1);
-  const PER_PAGE = 24;
-
-  const count = Math.ceil(products.length / PER_PAGE);
-  const data = usePagination(products, PER_PAGE); */
 
   const load = useCallback(async () => {
     try {
@@ -43,7 +39,23 @@ export const useProductListController = () => {
 
   const changeCategoryProducts = useCallback(
     async (event: any) => {
-      changeFilter({ category: { name: event.target.name, checked: true } });
+      const { value } = event.target;
+      changeFilter({ categories: value });
+    },
+    [changeFilter],
+  );
+
+  const changePriceProducts = useCallback(
+    async (value: number[]) => {
+      console.log(value);
+      changeFilter({ prices: value });
+    },
+    [changeFilter],
+  );
+
+  const search = useCallback(
+    async (data: string) => {
+      changeFilter({ text: data });
     },
     [changeFilter],
   );
@@ -71,7 +83,10 @@ export const useProductListController = () => {
     changePageSize,
     changeSortProducts,
     changeCategoryProducts,
+    changePriceProducts,
     page: Math.round(filter.offset / filter.limit),
     filter,
+    filteredProducts,
+    search,
   };
 };
