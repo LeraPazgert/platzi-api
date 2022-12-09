@@ -17,6 +17,7 @@ const Home: NextPage = () => {
         isPublic: true,
         layoutType: 'public',
         onlyNonAuth: false,
+        onlyForAdmin: false,
       }}
     >
       <ProductListView />

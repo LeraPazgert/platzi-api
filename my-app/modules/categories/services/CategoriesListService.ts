@@ -13,7 +13,6 @@ import {
 export const useCategoriesListService = () => {
   const dispatch = useAppDispatch();
   const { categories, loading, error } = useAppSelector(state => state.categories);
-
   const categoriesApi = useCategoriesApi();
 
   const getCategories = useCallback(

@@ -5,7 +5,7 @@ import { ICartProduct } from '../../types';
 import { CartItem } from '../CartItem';
 
 export const CartListView = () => {
-  const { addedProducts, addToCart, decrementProduct } = useCartController();
+  const { addedProducts, addToCart, decrementProduct, incrementProduct } = useCartController();
 
   const calculateTotal = (items: ICartProduct[]) =>
     items.reduce((acc, item) => acc + item.amount * item.price, 0);
@@ -28,6 +28,7 @@ export const CartListView = () => {
             item={item}
             addToCart={addToCart}
             decrementProduct={decrementProduct}
+            incrementProduct={incrementProduct}
           />
         ))}
       </Box>

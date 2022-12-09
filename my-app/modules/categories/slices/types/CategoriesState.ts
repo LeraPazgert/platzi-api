@@ -1,4 +1,4 @@
-import { ICategory } from '../../../../shared';
+import { ICategory } from '../../types';
 
 export interface CategoriesState {
   loading: boolean;

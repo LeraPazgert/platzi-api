@@ -19,6 +19,7 @@ const ProductDetailsPage: NextPage = () => {
         isPublic: true,
         layoutType: 'public',
         onlyNonAuth: false,
+        onlyForAdmin: false,
       }}
     >
       <ProductDetails productId={Number(productId)} />

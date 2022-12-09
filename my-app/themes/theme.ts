@@ -2,6 +2,18 @@ import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
   components: {
+    MuiSnackbarContent: {
+      styleOverrides: {
+        root: {
+          height: '80px',
+          backgroundColor: '#6B99C3',
+        },
+        message: {
+          fontFamily: 'Dosis, sans-serif',
+          fontSize: '20px',
+        },
+      },
+    },
     MuiMobileStepper: {
       styleOverrides: {
         dotActive: {
@@ -49,6 +61,15 @@ export const theme = createTheme({
         },
       },
     },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginLeft: 0,
+          fontSize: '15px',
+          fontWeight: 300,
+        },
+      },
+    },
   },
   palette: {
     primary: {
@@ -58,6 +79,7 @@ export const theme = createTheme({
     },
     secondary: {
       main: '#6B99C3',
+      light: '#cfcfcf',
       dark: '#022E66',
     },
     info: {

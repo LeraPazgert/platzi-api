@@ -1,4 +1,5 @@
 export * from './components';
 export * from './services';
 export * from './slices';
-export * from './controllers';
+export * from './types';
+export * from './controller';

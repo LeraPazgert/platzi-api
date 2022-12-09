@@ -1,12 +1,11 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 import {
   IProduct,
   IProductCreateRequest,
   ProductsFilter,
-} from "../../../../modules/products";
-
-import { useApiUrlBuilderContext } from "../../url";
-import { useDefaultApiClientContext } from "../contexts";
+} from '../../../../modules/products';
+import { useApiUrlBuilderContext } from '../../url';
+import { useDefaultApiClientContext } from '../contexts';
 
 export const useProductsApi = () => {
   const apiClient = useDefaultApiClientContext();
@@ -23,11 +22,20 @@ export const useProductsApi = () => {
           url: apiUrlBuilder.setProducts(),
           data: product,
         }),
-      getProduct: (id: number) =>
+      editProduct: (productId: number, product: IProductCreateRequest) =>
+        apiClient.put<IProductCreateRequest, IProduct>({
+          url: apiUrlBuilder.product(productId),
+          data: product,
+        }),
+      removeProduct: (productId: number) =>
+        apiClient.delete<IProduct>({
+          url: apiUrlBuilder.product(productId),
+        }),
+      getProduct: (productId: number) =>
         apiClient.get<IProduct>({
-          url: apiUrlBuilder.product(id),
+          url: apiUrlBuilder.product(productId),
         }),
     }),
-    [apiClient, apiUrlBuilder]
+    [apiClient, apiUrlBuilder],
   );
 };

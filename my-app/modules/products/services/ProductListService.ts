@@ -7,6 +7,7 @@ import {
 } from '../../../shared';
 import { RootState } from '../../../store';
 import {
+  deleteProduct,
   ProductsFilter,
   setFilter,
   setIsLoading,
@@ -20,7 +21,6 @@ export const useProductListService = () => {
   const { products, loading, error, filter, filteredProducts } = useAppSelector(
     state => state.products,
   );
-
   const productsApi = useProductsApi();
 
   const getProducts = useCallback(async () => {
@@ -38,6 +38,16 @@ export const useProductListService = () => {
     }
   }, [dispatch, getState, productsApi]);
 
+  const productDelete = useCallback(
+    async (productId: number) => {
+      try {
+        productsApi.removeProduct(productId);
+        dispatch(deleteProduct(productId));
+      } catch (e) {}
+    },
+    [dispatch, productsApi],
+  );
+
   const changeFilter = useCallback(
     (filter: Partial<ProductsFilter>) => {
       dispatch(setFilter(filter));
@@ -45,5 +55,14 @@ export const useProductListService = () => {
     [dispatch],
   );
 
-  return { products, loading, error, filter, getProducts, changeFilter, filteredProducts };
+  return {
+    products,
+    loading,
+    error,
+    filter,
+    getProducts,
+    changeFilter,
+    filteredProducts,
+    productDelete,
+  };
 };

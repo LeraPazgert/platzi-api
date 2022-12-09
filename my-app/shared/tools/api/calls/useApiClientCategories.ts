@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { IUser, IUserCreateRequest } from '../../../../modules';
-import { ICategory } from '../../../types';
+import { ICategory } from '../../../../modules/categories';
 import { useApiUrlBuilderContext } from '../../url';
 import { useDefaultApiClientContext } from '../contexts';
 

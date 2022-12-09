@@ -1,4 +1,4 @@
-import { ICategory } from "../../../shared";
+import { ICategory } from '../../categories';
 
 export interface ICartProduct {
   id: number;

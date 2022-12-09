@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ICartProduct } from '../types';
 import { IProductsCartState } from './types';
 
 const initialState: IProductsCartState = {
@@ -16,14 +17,20 @@ export const cartSlice = createSlice({
       if (!existingProduct) {
         state.addedProducts?.push(action.payload);
       } else {
-        existingProduct.amount = existingProduct.amount + 1;
         existingProduct.price = +existingProduct.amount * +price;
+      }
+    },
+    productIncrement: (state, action) => {
+      const { id } = action.payload;
+      const item = state.addedProducts.find((item: ICartProduct) => item.id === id);
+      if (item?.amount) {
+        item.amount = item.amount + 1;
       }
     },
     productDecrement: (state, action) => {
       const { id } = action.payload;
-      const item = state.addedProducts.find((item: any) => item.id === id);
-      if (item && item.amount > 0) {
+      const item = state.addedProducts.find((item: ICartProduct) => item.id === id);
+      if (item?.amount) {
         item.amount = item.amount - 1;
       }
       state.addedProducts = state.addedProducts.filter(item => item.amount > 0);
@@ -39,4 +46,5 @@ export const cartSlice = createSlice({
 
 const { actions, reducer } = cartSlice;
 export default reducer;
-export const { productAdd, productDeleted, changeIsOpen, productDecrement } = actions;
+export const { productAdd, productDeleted, changeIsOpen, productDecrement, productIncrement } =
+  actions;

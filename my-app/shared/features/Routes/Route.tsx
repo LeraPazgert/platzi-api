@@ -10,7 +10,7 @@ type Props = {
   routeData: RouteData;
 };
 export const Route: FC<PropsWithChildren<Props>> = ({ routeData, children }) => {
-  const { name, title, isPublic, onlyNonAuth, layoutType } = routeData;
+  const { name, title, isPublic, onlyNonAuth, onlyForAdmin, layoutType } = routeData;
   const { isAuth } = useAppSelector(state => state.auth);
 
   const RouterWrapper = isPublic ? PublicRoute : PrivateRoute;
@@ -18,6 +18,7 @@ export const Route: FC<PropsWithChildren<Props>> = ({ routeData, children }) => 
   if (typeof isAuth !== 'boolean') {
     return <Loading />;
   }
+
   return (
     <>
       <Head>
@@ -31,6 +32,7 @@ export const Route: FC<PropsWithChildren<Props>> = ({ routeData, children }) => 
         isPublic={isPublic}
         layoutType={layoutType}
         onlyNonAuth={onlyNonAuth}
+        onlyForAdmin={onlyForAdmin}
       >
         <LayoutComponent layoutType={layoutType}>{children}</LayoutComponent>
       </RouterWrapper>

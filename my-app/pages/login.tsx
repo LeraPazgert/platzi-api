@@ -1,20 +1,22 @@
-import type { NextPage } from 'next'
-import { AuthFormView } from '../modules/auth'
-import { Route } from '../shared'
+import { AuthFormView } from '../modules/auth';
+import { Route } from '../shared';
 
+import type { NextPage } from 'next';
 const LoginPage: NextPage = () => {
-    return (
-        <div style={{ backgroundColor: 'rgb(245, 245, 245)', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Route routeData={{
-                name: 'login',
-                title: 'Login',
-                isPublic: true,
-                layoutType: 'auth',
-                onlyNonAuth: true
-            }}> <AuthFormView /></Route>
-        </div>
+  return (
+    <Route
+      routeData={{
+        name: 'login',
+        title: 'Login',
+        isPublic: true,
+        layoutType: 'auth',
+        onlyNonAuth: true,
+        onlyForAdmin: false,
+      }}
+    >
+      <AuthFormView />
+    </Route>
+  );
+};
 
-    )
-}
-
-export default LoginPage
+export default LoginPage;

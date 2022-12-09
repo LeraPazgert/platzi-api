@@ -1,18 +1,16 @@
-import { useCallback } from "react";
-import { useAppDispatch, useAppSelector, useUsersApi } from "../../../shared";
+import { useCallback } from 'react';
+import { useAppDispatch, useAppSelector, useUsersApi } from '../../../shared';
 import {
+  setFilter,
   setIsLoading,
   setUserList,
   setUserListError,
-  setFilter,
   UsersFilter,
-} from "../slices";
+} from '../slices';
 
 export const useUserListService = () => {
   const dispatch = useAppDispatch();
-  const { users, loading, error, filter } = useAppSelector(
-    (state) => state.users
-  );
+  const { users, loading, error, filter } = useAppSelector(state => state.users);
   const usersApi = useUsersApi();
 
   const getUsers = useCallback(async () => {
@@ -33,7 +31,7 @@ export const useUserListService = () => {
     (filter: Partial<UsersFilter>) => {
       dispatch(setFilter(filter));
     },
-    [dispatch]
+    [dispatch],
   );
 
   return { users, loading, error, getUsers, changeFilter };

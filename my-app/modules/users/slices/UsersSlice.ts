@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser } from "../types";
-import { UsersFilter, UsersState } from "./types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from '../types';
+import { UsersFilter, UsersState } from './types';
 
 const initialState: UsersState = {
   loading: false,
@@ -12,7 +12,7 @@ const initialState: UsersState = {
 };
 
 export const UsersSlice = createSlice({
-  name: "users",
+  name: 'users',
   initialState,
   reducers: {
     setIsLoading(state, action: PayloadAction<boolean>) {
@@ -25,14 +25,16 @@ export const UsersSlice = createSlice({
       state.error = action.payload;
     },
     setFilter(state, action: PayloadAction<Partial<UsersFilter>>) {
-      state.filter ={
+      state.filter = {
         ...state.filter,
-        ... action.payload
+        ...action.payload,
       };
     },
   },
 });
 
 const { actions, reducer } = UsersSlice;
-export default reducer;
+
 export const { setIsLoading, setUserList, setUserListError, setFilter } = actions;
+
+export default reducer;

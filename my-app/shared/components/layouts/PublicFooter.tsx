@@ -1,15 +1,14 @@
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import { Box, Grid, Typography } from '@mui/material';
 import * as React from 'react';
 import logo from '../../assets/images/kiss-technology.svg';
 
 export const PublicFooter = () => {
+  const footerMenuLinks = ['About Us', 'Contacts', 'Terms & Condition', 'Privacy Policy'];
+  const footerFollowLinks = ['TWITTER', 'INSTAGRAM', 'FACEBOOK'];
   return (
     <Box
       position="static"
       sx={{
-        margin: '20px 0 0 0',
         padding: '20px 20px 20px 20px',
         backgroundColor: theme => theme.palette.primary.main,
         display: 'flex',
@@ -29,7 +28,7 @@ export const PublicFooter = () => {
         }}
       >
         <Grid item sx={{ paddingTop: '10px' }}>
-          <img src={logo} width="90px" height="90px" />
+          <img src={logo} width="90px" height="90px" alt="" />
         </Grid>
         <Grid
           item
@@ -77,26 +76,14 @@ export const PublicFooter = () => {
             MENU
           </Typography>
         </Grid>
-        <Grid item>
-          <Typography variant="overline" sx={{ fontSize: '15px' }}>
-            About Us
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="overline" sx={{ fontSize: '15px' }}>
-            Contacts
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="overline" sx={{ fontSize: '15px' }}>
-            Terms & Condition
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="overline" sx={{ fontSize: '15px' }}>
-            Privacy Policy
-          </Typography>
-        </Grid>
+
+        {footerMenuLinks.map(item => (
+          <Grid item key={item}>
+            <Typography variant="overline" sx={{ fontSize: '15px' }}>
+              {item}
+            </Typography>
+          </Grid>
+        ))}
       </Grid>
 
       <Grid
@@ -114,26 +101,14 @@ export const PublicFooter = () => {
             FOLLOW US
           </Typography>
         </Grid>
-        <Grid item>
-          <Typography variant="overline" sx={{ fontSize: '15px' }}>
-            Twitter
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="overline" sx={{ fontSize: '15px' }}>
-            Instagram
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="overline" sx={{ fontSize: '15px' }}>
-            Facebook
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="overline" sx={{ fontSize: '15px' }}>
-            Privacy Policy
-          </Typography>
-        </Grid>
+
+        {footerFollowLinks.map(item => (
+          <Grid item key={item}>
+            <Typography variant="overline" sx={{ fontSize: '15px' }}>
+              {item}
+            </Typography>
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );

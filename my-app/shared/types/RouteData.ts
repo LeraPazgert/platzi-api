@@ -1,4 +1,4 @@
-import { LayoutType } from "../components";
+import { LayoutType } from '../components';
 
 export type RouteData = {
   name: string;
@@ -6,4 +6,5 @@ export type RouteData = {
   isPublic: boolean;
   layoutType: LayoutType;
   onlyNonAuth: boolean;
+  onlyForAdmin: boolean;
 };

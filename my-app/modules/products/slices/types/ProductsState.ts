@@ -1,4 +1,3 @@
-import { ICategory } from '../../../../shared';
 import { IProduct } from '../../types';
 import { ProductsFilter } from './ProductsFilter';
 

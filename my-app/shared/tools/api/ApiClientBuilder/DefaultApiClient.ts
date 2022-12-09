@@ -1,13 +1,13 @@
-import axios, { AxiosError, Method } from "axios";
-import { DefaultStorageClient } from "../../storage";
-import { ApiClient } from "./ApiClient";
+import axios, { AxiosError, Method } from 'axios';
+import { DefaultStorageClient } from '../../storage';
+import { ApiClient } from './ApiClient';
 
 export class DefaultApiClient implements ApiClient {
   localStorageClient: DefaultStorageClient;
   headers: Record<string, string> = {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
   };
   errorHandler?(e: AxiosError): void;
 
@@ -17,10 +17,9 @@ export class DefaultApiClient implements ApiClient {
 
   public getHeaders() {
     const token = this.localStorageClient.get();
-    return token
-      ? { ...this.headers, Authorization: `Bearer ${token}` }
-      : this.headers;
+    return token ? { ...this.headers, Authorization: `Bearer ${token}` } : this.headers;
   }
+
   public setErrorHandler(errorHandler: (e: AxiosError) => void) {
     this.errorHandler = errorHandler;
   }
@@ -43,51 +42,33 @@ export class DefaultApiClient implements ApiClient {
       params,
       data,
     })
-      .then((response) => {
+      .then(response => {
         return response.data;
       })
-      .catch((e) => {
-       this.errorHandler?.(e);
+      .catch(e => {
+        this.errorHandler?.(e);
         throw e;
       });
   }
 
-  public async get<T, TResult = T>({
-    url,
-    params,
-  }: {
-    url: string;
-    params?: Partial<T>;
-  }) {
+  public async get<T, TResult = T>({ url, params }: { url: string; params?: Partial<T> }) {
     return this.request<T, TResult>({
-      method: "GET",
+      method: 'GET',
       params,
       url,
     });
   }
 
-  public async post<T, TResult = T>({
-    url,
-    data,
-  }: {
-    url: string;
-    data?: Partial<T>;
-  }) {
+  public async post<T, TResult = T>({ url, data }: { url: string; data?: Partial<T> }) {
     return this.request<T, TResult>({
-      method: "POST",
+      method: 'POST',
       url,
       data,
     });
   }
-  public async put<T, TResult = T>({
-    url,
-    data,
-  }: {
-    url: string;
-    data?: Partial<T>;
-  }) {
+  public async put<T, TResult = T>({ url, data }: { url: string; data?: Partial<T> }) {
     return this.request<T, TResult>({
-      method: "PUT",
+      method: 'PUT',
       url,
       data,
     });
@@ -102,7 +83,7 @@ export class DefaultApiClient implements ApiClient {
     params?: Partial<T>;
   }) {
     return this.request<T, TResult>({
-      method: "DELETE",
+      method: 'DELETE',
       url,
       data,
       params,

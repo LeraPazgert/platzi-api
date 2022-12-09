@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
-import { useCallback } from "react";
-import { useAppUrlBuilderContext } from "../../../shared";
-import { useAuthService } from "../services";
-import { LoginFormData, RegisterFormData } from "../types";
+import { useRouter } from 'next/router';
+import { useCallback } from 'react';
+import { useAppUrlBuilderContext } from '../../../shared';
+import { useAuthService } from '../services';
+import { LoginFormData, RegisterFormData } from '../types';
 
 export const useAuthController = () => {
   const { login, register, logout } = useAuthService();
@@ -18,7 +18,7 @@ export const useAuthController = () => {
         // notificationView.error()
       }
     },
-    [appUrlBuilder, login, router]
+    [appUrlBuilder, login, router],
   );
 
   const registration = useCallback(
@@ -30,7 +30,7 @@ export const useAuthController = () => {
         // notificationView.error()
       }
     },
-    [appUrlBuilder, register, router]
+    [appUrlBuilder, register, router],
   );
 
   const exit = useCallback(async () => {

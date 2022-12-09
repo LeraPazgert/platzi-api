@@ -1,13 +1,9 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Grid, Tooltip } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
-import Badge from '@mui/material/Badge';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { AppBar, Badge, Box, Grid, Tooltip, Typography } from '@mui/material';
 import Link from 'next/link';
-import { FC, ReactNode } from 'react';
-import { useAuthController } from '../../../modules';
-import { useCartController } from '../../../modules/cart/controllers/CartListController';
+import { FC, ReactNode, useMemo } from 'react';
+import { useAuthController } from '../../../modules/auth';
+import { useCartController } from '../../../modules/cart';
 import logo from '../../assets/images/kiss-technology.svg';
 import { useAppSelector, useAppUrlBuilderContext } from '../../tools';
 import { Button, LinkButton } from '../buttons';
@@ -17,6 +13,10 @@ export const PublicHeader = () => {
   const { isAuth, profile } = useAppSelector(state => state.auth);
   const { changeCartOpen, addedProducts } = useCartController();
   const { exit } = useAuthController();
+
+  const amountOfProducts = useMemo(() => {
+    return addedProducts.reduce((acc, cur) => acc + cur.amount, 0);
+  }, [addedProducts]);
 
   return (
     <AppBar
@@ -37,11 +37,11 @@ export const PublicHeader = () => {
           display: 'flex',
           flexDirection: 'row',
           marginTop: '10px',
+          justifyContent: 'space-between',
         }}
       >
         <Grid
           item
-          spacing={1}
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -49,36 +49,33 @@ export const PublicHeader = () => {
             paddingLeft: 0,
           }}
         >
-          <Grid item sx={{ paddingTop: '10px' }}>
-            <img src={logo} width="70px" height="70px" />
+          <Grid>
+            <Grid item sx={{ paddingTop: '10px' }}>
+              <img src={logo} width="70px" height="70px" alt="" />
+            </Grid>
+            <Grid
+              item
+              sx={{
+                color: 'white',
+                marginTop: '-5px',
+              }}
+            >
+              <Typography
+                variant="overline"
+                sx={{
+                  fontSize: '13px',
+                }}
+              >
+                YOUR MARKET
+              </Typography>
+            </Grid>
           </Grid>
-
           <Grid item sx={{ marginLeft: '20px' }}>
             <Typography variant="body1" component="div" sx={{ color: 'white' }}>
               {isAuth ? `Hello, ${profile?.name}!` : ''}
             </Typography>
           </Grid>
         </Grid>
-
-        <Grid
-          item
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '15px',
-            flex: '1 1',
-          }}
-        >
-          <Links
-            data={[
-              { title: 'HOME', link: appUrlBuilder.home() },
-              { title: 'ABOUT', link: appUrlBuilder.home() },
-              { title: 'CONTACTS', link: appUrlBuilder.home() },
-            ]}
-          />
-        </Grid>
-
         <Grid
           item
           sx={{
@@ -90,11 +87,7 @@ export const PublicHeader = () => {
           {isAuth ? (
             <>
               <Tooltip title="Cart">
-                <Badge
-                  badgeContent={addedProducts.length}
-                  color="secondary"
-                  sx={{ color: 'white' }}
-                >
+                <Badge badgeContent={amountOfProducts} color="secondary" sx={{ color: 'white' }}>
                   <ShoppingCartIcon
                     onClick={() => changeCartOpen(true)}
                     sx={{ fontSize: '35px', ':hover': { cursor: 'pointer' } }}
@@ -102,7 +95,9 @@ export const PublicHeader = () => {
                 </Badge>
               </Tooltip>
               <Box sx={{ marginLeft: '15px', fontSize: '15px' }}>
-                <Button label="Logout" handleClick={exit} type="button" />
+                <Button handleClick={exit} type="button">
+                  Logout
+                </Button>
               </Box>
             </>
           ) : (
@@ -110,21 +105,25 @@ export const PublicHeader = () => {
           )}
         </Grid>
       </Grid>
+
       <Grid
         item
         sx={{
-          color: 'white',
-          marginTop: '-5px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '15px',
+          flex: '1 1',
         }}
       >
-        <Typography
-          variant="overline"
-          sx={{
-            fontSize: '13px',
-          }}
-        >
-          YOUR MARKET
-        </Typography>
+        <Links
+          data={[
+            { title: 'HOME', link: appUrlBuilder.home() },
+            { title: 'ABOUT', link: appUrlBuilder.home() },
+            { title: 'CONTACTS', link: appUrlBuilder.home() },
+            { title: 'PRODUCTS', link: appUrlBuilder.products() },
+          ]}
+        />
       </Grid>
     </AppBar>
   );
@@ -142,7 +141,7 @@ const Links: FC<Props> = ({ data }) => {
               variant="overline"
               sx={{
                 cursor: 'pointer',
-                fontSize: '20px',
+                fontSize: '25px',
                 color: 'white',
                 '&:hover': {
                   borderBottom: '2px solid ',

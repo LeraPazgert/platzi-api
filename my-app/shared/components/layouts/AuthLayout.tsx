@@ -1,12 +1,20 @@
-import { FC, PropsWithChildren } from "react";
-import { AuthHeader } from "./AuthHeader";
 import Box from '@mui/material/Box';
+import { FC, PropsWithChildren } from 'react';
+import { AuthHeader } from './AuthHeader';
 
 export const AuthLayout: FC<PropsWithChildren> = ({ children }) => {
-    return (
-        <Box sx={{ display: 'flex', width: '100%', height: '100%' }}>
-            <AuthHeader />
-            {children}
-        </Box>
-    )
-}
+  return (
+    <Box
+      sx={{
+        backgroundColor: theme => theme.palette.primary.light,
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <AuthHeader />
+      {children}
+    </Box>
+  );
+};

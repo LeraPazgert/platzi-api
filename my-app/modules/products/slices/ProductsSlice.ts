@@ -31,6 +31,9 @@ export const ProductsSlice = createSlice({
     setProductsListError(state, action: PayloadAction<Error>) {
       state.error = action.payload;
     },
+    deleteProduct(state, action) {
+      state.products = state.products.filter(item => item.id !== action.payload);
+    },
     setFilter(state, action: PayloadAction<Partial<ProductsFilter>>) {
       state.filter = {
         ...state.filter,
@@ -49,7 +52,8 @@ export const ProductsSlice = createSlice({
 
 const { actions, reducer } = ProductsSlice;
 export default reducer;
-export const { setIsLoading, setProductsList, setProductsListError, setFilter } = actions;
+export const { setIsLoading, setProductsList, setProductsListError, setFilter, deleteProduct } =
+  actions;
 
 const searchProducts = (initProducts: IProduct[], text: string) => {
   if (text === '' || text.length < 3) {
@@ -67,10 +71,12 @@ const sortProducts = (initProducts: IProduct[], sort: string) => {
       return initProducts.sort((a, b) => {
         return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;
       });
+
     case 'name,desc':
       return initProducts.sort((a, b) => {
         return b.title.toLowerCase() > a.title.toLowerCase() ? 1 : -1;
       });
+
     case 'price,asc':
       return initProducts.sort((objA, objB) => {
         return objA.price - objB.price;
@@ -93,6 +99,7 @@ const filterByCategory = (initProducts: IProduct[], categories: number[]) => {
     return initProducts;
   }
 };
+
 const filterByPrice = (initProducts: IProduct[], prices: number[]) => {
   if (prices.length) {
     return initProducts.filter(item => item.price >= prices[0] && item.price <= prices[1]);

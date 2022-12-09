@@ -1,16 +1,16 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { Box, Typography } from '@mui/material';
 import { FC } from 'react';
+import { Button } from '../../../../shared';
 import { ICartProduct } from '../../types';
 
 type Props = {
   item: ICartProduct;
   addToCart: (clickedItem: ICartProduct) => void;
   decrementProduct: (clickedItem: ICartProduct) => void;
+  incrementProduct: (clickedItem: ICartProduct) => void;
 };
 
-export const CartItem: FC<Props> = ({ item, addToCart, decrementProduct }) => {
+export const CartItem: FC<Props> = ({ item, addToCart, decrementProduct, incrementProduct }) => {
   return (
     <Box
       sx={{
@@ -40,25 +40,17 @@ export const CartItem: FC<Props> = ({ item, addToCart, decrementProduct }) => {
             marginTop: '70px',
           }}
         >
-          <Button
-            size="small"
-            disableElevation
-            variant="contained"
-            onClick={() => decrementProduct(item)}
-          >
-            -
-          </Button>
+          <Button handleClick={() => decrementProduct(item)}>-</Button>
           <Typography variant="subtitle1">{item.amount}</Typography>
-          <Button size="small" disableElevation variant="contained" onClick={() => addToCart(item)}>
-            +
-          </Button>
+          <Button handleClick={() => incrementProduct(item)}>+</Button>
         </Box>
       </Box>
       <Box sx={{ width: '40%' }}>
-        <img
+        <Box
+          component="img"
           src={item.images[0]}
           alt={item.title}
-          style={{
+          sx={{
             maxWidth: '130px',
             height: '150px',
             objectFit: 'cover',

@@ -8,6 +8,7 @@ import { SearchData } from './types';
 type Props = {
   search: any;
 };
+
 export const SearchProducts: FC<Props> = ({ search }) => {
   const form = useForm<SearchData>({
     defaultValues: {

@@ -1,18 +1,7 @@
-import {
-  Box,
-  Grid,
-  Pagination,
-  TablePagination,
-  Typography,
-} from '@mui/material';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
+import { Box, Grid, TablePagination, Typography } from '@mui/material';
 import { useMemo } from 'react';
-import { Button, Loading } from '../../../../shared';
-import { CategoriesView } from '../../../categories/components/CategoriesView';
+import { Loading } from '../../../../shared';
+import { CategoriesDropdown } from '../../../categories';
 import { useProductListController } from '../../controllers';
 import { ProductItem } from '../ProductItem';
 import { ProductsFilters } from '../ProductsFilters';
@@ -37,6 +26,11 @@ export const ProductListView = () => {
     return products.reduce((acc, cur) => (acc > cur.price ? acc : cur.price), 0);
   }, [products]);
 
+  const minPrice = useMemo(() => {
+    const arr = products.map(item => item.price);
+    return Math.min(...arr);
+  }, [products]);
+
   if (loading) {
     return <Loading />;
   }
@@ -59,30 +53,26 @@ export const ProductListView = () => {
           }}
         >
           <SearchProducts search={search} />
-          <ProductsFilters filter={filter} sort={changeSortProducts} />
+          <ProductsFilters initValue={filter.sort} onChange={changeSortProducts} />
           <Typography variant="overline">Price Range</Typography>
           <ProductsPriceRange
             changePriceProducts={changePriceProducts}
             filter={filter}
             maxPrice={maxPrice}
+            minPrice={minPrice}
           />
         </Box>
-
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '70%' }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-            <CategoriesView changeCategoryProducts={changeCategoryProducts} filter={filter} />
-            {!!filteredProducts.length && (
-              <Box>
-                <TablePagination
-                  variant="head"
-                  component="div"
-                  count={-1}
-                  page={page}
-                  rowsPerPage={25}
-                  onPageChange={changePageSize}
-                />
-              </Box>
-            )}
+            <CategoriesDropdown changeCategoryProducts={changeCategoryProducts} filter={filter} />
+            <TablePagination
+              variant="head"
+              component="div"
+              count={-1}
+              page={page}
+              rowsPerPage={25}
+              onPageChange={changePageSize}
+            />
           </Box>
 
           {!!filteredProducts.length ? (

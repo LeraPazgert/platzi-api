@@ -1,6 +1,6 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
-import { FC } from 'react';
-import { Loading, useAppSelector } from '../../../../shared';
+import { Box, Grid, Typography } from '@mui/material';
+import { FC, useCallback, useState } from 'react';
+import { Button, Loading, useAppSelector } from '../../../../shared';
 import { Picture } from '../../../../shared/components/image';
 import { useCartController } from '../../../cart';
 import { useProductDetailsController } from '../../controllers';
@@ -8,25 +8,32 @@ import { useProductDetailsController } from '../../controllers';
 type Props = {
   productId: number;
 };
+
 export const ProductDetails: FC<Props> = ({ productId }) => {
   const { isAuth } = useAppSelector(state => state.auth);
   const { product, loading, error } = useProductDetailsController(productId);
   const { addToCart } = useCartController();
+  const [indexImage, setIndexImage] = useState(0);
+
+  const handleChangePicture = useCallback((index: number) => {
+    setIndexImage(index);
+  }, []);
 
   if (loading || !product) {
     return <Loading />;
   }
+
   return (
     <Grid container width="100%" spacing={3} sx={{ padding: '50px' }}>
       <Grid item width="60%">
         <Box
-          style={{
+          sx={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
           }}
         >
-          <Picture image={product?.images[0]} />
+          <Picture image={product?.images[indexImage]} />
         </Box>
       </Grid>
       <Grid container item width="40%" sx={{ flexDirection: 'column' }} spacing={3}>
@@ -56,14 +63,16 @@ export const ProductDetails: FC<Props> = ({ productId }) => {
         >
           {product.images.map((image: string, index) => {
             return (
-              <Grid item key={index}>
+              <Grid item key={index} onClick={() => handleChangePicture(index)}>
                 <Box
                   sx={{
                     width: '95%',
                     height: '100%',
                     objectFit: 'cover',
                     '&:hover': {
-                      outline: '1px solid red',
+                      outline: '1px solid',
+                      outlineColor: theme => theme.palette.primary.dark,
+                      cursor: 'pointer',
                     },
                   }}
                 >
@@ -78,16 +87,9 @@ export const ProductDetails: FC<Props> = ({ productId }) => {
           <Typography variant="overline" sx={{ fontSize: '20px', lineHeight: '20px' }}>
             ${product?.price}
           </Typography>
+
           {isAuth && (
-            <Button
-              variant="contained"
-              sx={{ backgroundColor: theme => theme.palette.secondary.dark, color: 'white' }}
-              onClick={() => addToCart({ ...product, amount: 1 })}
-            >
-              <Typography variant="overline" sx={{ fontSize: '15px' }}>
-                Add to cart
-              </Typography>
-            </Button>
+            <Button handleClick={() => addToCart({ ...product, amount: 1 })}>Add to cart</Button>
           )}
         </Grid>
       </Grid>

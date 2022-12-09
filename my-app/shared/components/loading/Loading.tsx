@@ -4,9 +4,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 export const Loading = () => {
   return (
     <Box
-      sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px', marginBottom: '50px' }}
+      sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginRight: ' -50%',
+        transform: 'translate(-50%, -50%)',
+      }}
     >
-      <CircularProgress size={100} />
+      <CircularProgress size={150} />
     </Box>
   );
 };

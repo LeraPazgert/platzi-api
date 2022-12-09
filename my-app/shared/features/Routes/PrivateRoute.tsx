@@ -1,26 +1,30 @@
-import { useRouter } from "next/router";
-import { FC, PropsWithChildren, useEffect } from "react";
-import { useAppUrlBuilderContext } from "../../tools";
-import { RouteData } from "../../types";
-
+import { useRouter } from 'next/router';
+import { FC, PropsWithChildren, useEffect } from 'react';
+import { useAppSelector, useAppUrlBuilderContext } from '../../tools';
+import { RouteData } from '../../types';
 
 type Props = RouteData & { isAuth?: boolean };
 
 export const PrivateRoute: FC<PropsWithChildren<Props>> = ({ children, ...rest }) => {
-    const { isAuth } = rest;
-    const router = useRouter();
-    const appUrlBuilder = useAppUrlBuilderContext();
-    const isRedirect = !isAuth;
+  const { isAuth, onlyForAdmin } = rest;
+  const router = useRouter();
+  const appUrlBuilder = useAppUrlBuilderContext();
+  const { profile } = useAppSelector(state => state.auth);
+  const isRedirect = !isAuth;
+  const isRedirectForAdminPage = onlyForAdmin && profile?.role !== 'admin';
 
-    useEffect(() => {
-        if (isRedirect) {
-            router.push(appUrlBuilder.login())
-        }
-    }, [isRedirect, router, appUrlBuilder]);
-
+  useEffect(() => {
     if (isRedirect) {
-        return null;
+      router.push(appUrlBuilder.login());
     }
+    if (isRedirectForAdminPage) {
+      router.push(appUrlBuilder.home());
+    }
+  }, [isRedirect, router, appUrlBuilder, isRedirectForAdminPage]);
 
-    return <>{children}</>
-}
+  if (isRedirect) {
+    return null;
+  }
+
+  return <>{children}</>;
+};

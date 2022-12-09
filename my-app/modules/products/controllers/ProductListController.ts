@@ -1,25 +1,45 @@
 import { useRouter } from 'next/router';
+import queryString from 'query-string';
 import { useCallback, useEffect } from 'react';
 import { useEffectOnce } from 'react-use';
 import { useAppUrlBuilderContext } from '../../../shared';
 import { useCategoriesListService } from '../../categories/services/CategoriesListService';
 import { useProductListService } from '../services';
+import { IProductFormData } from '../types';
 
 export const useProductListController = () => {
-  const { products, loading, error, filter, getProducts, changeFilter, filteredProducts } =
-    useProductListService();
+  const {
+    products,
+    loading,
+    error,
+    filter,
+    getProducts,
+    changeFilter,
+    filteredProducts,
+    productDelete,
+  } = useProductListService();
   const { getCategories } = useCategoriesListService();
   const router = useRouter();
   const appUrl = useAppUrlBuilderContext();
 
   const load = useCallback(async () => {
     try {
-      await getProducts();
-      await getCategories(5);
-    } catch {
-      // notificationView.error()
+      await Promise.all([getProducts(), getCategories(5)]);
+    } catch (e) {
+      /* notificationView.error() */
     }
   }, [getCategories, getProducts]);
+
+  const remove = useCallback(
+    async (id: number) => {
+      try {
+        await productDelete(id);
+      } catch {
+        // notificationView.error()
+      }
+    },
+    [productDelete],
+  );
 
   const changePageSize = useCallback(
     async (event: any, pageNumber: number) => {
@@ -47,7 +67,6 @@ export const useProductListController = () => {
 
   const changePriceProducts = useCallback(
     async (value: number[]) => {
-      console.log(value);
       changeFilter({ prices: value });
     },
     [changeFilter],
@@ -62,7 +81,9 @@ export const useProductListController = () => {
 
   useEffect(() => {
     const page = Math.round(filter.offset / filter.limit);
-    const url = appUrl.home({ page });
+    const queryStr = queryString.stringify({ page });
+    const url = window.location.origin + window.location.pathname + '?' + queryStr;
+
     if (window.history.replaceState) {
       window.history.replaceState({ ...(window.history.state || {}), path: url, as: url }, '', url);
     }
@@ -88,5 +109,6 @@ export const useProductListController = () => {
     filter,
     filteredProducts,
     search,
+    remove,
   };
 };

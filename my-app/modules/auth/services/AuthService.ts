@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 import {
   useAppDispatch,
   useAppSelector,
@@ -6,9 +6,9 @@ import {
   useDefaultLocalStorageContext,
   useFilesApi,
   useUsersApi,
-} from "../../../shared";
-import { LoginFormData, RegisterFormData } from "../types";
-import { exit, setProfile } from "../slices";
+} from '../../../shared';
+import { exit, setProfile } from '../slices';
+import { LoginFormData, RegisterFormData } from '../types';
 
 export const useAuthService = () => {
   const dispatch = useAppDispatch();
@@ -16,8 +16,7 @@ export const useAuthService = () => {
   const userApi = useUsersApi();
   const filesApi = useFilesApi();
   const tokenStorage = useDefaultLocalStorageContext();
-  const { isAuth } = useAppSelector((state) => state.auth);
-
+  const { isAuth } = useAppSelector(state => state.auth);
 
   const login = useCallback(
     async (data: LoginFormData) => {
@@ -27,20 +26,17 @@ export const useAuthService = () => {
         const profileData = await authApi.getProfile();
         dispatch(setProfile({ isAuth: true, profile: profileData }));
       } catch (e) {
-        //store
-
         throw e;
       }
     },
-    [authApi, dispatch, tokenStorage]
+    [authApi, dispatch, tokenStorage],
   );
 
   const register = useCallback(
     async (data: RegisterFormData) => {
       try {
-        console.log(data.avatar);
         const formData = new FormData();
-        formData.append("file", data.avatar, data.avatar.name);
+        formData.append('file', data.avatar, data.avatar.name);
 
         const image = await filesApi.uploadFile(formData);
         const user = await userApi.createUser({
@@ -57,7 +53,7 @@ export const useAuthService = () => {
         throw e;
       }
     },
-    [authApi, dispatch, filesApi, tokenStorage, userApi]
+    [authApi, dispatch, filesApi, tokenStorage, userApi],
   );
 
   const logout = useCallback(async () => {

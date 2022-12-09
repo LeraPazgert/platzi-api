@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICategory } from '../../../shared';
+import { ICategory } from '../types';
 import { CategoriesState } from './types';
 
 const initialState: CategoriesState = {

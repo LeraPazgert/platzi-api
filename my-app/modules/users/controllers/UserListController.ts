@@ -1,10 +1,9 @@
-import { useCallback } from "react";
-import { useEffectOnce } from "react-use";
-import { useUserListService } from "../services";
+import { useCallback } from 'react';
+import { useEffectOnce } from 'react-use';
+import { useUserListService } from '../services';
 
 export const useUserListController = () => {
-  const { users, loading, error, getUsers, changeFilter } =
-    useUserListService();
+  const { users, loading, error, getUsers, changeFilter } = useUserListService();
 
   const load = useCallback(async () => {
     try {
@@ -19,7 +18,7 @@ export const useUserListController = () => {
       changeFilter({ limit });
       await load();
     },
-    [changeFilter, load]
+    [changeFilter, load],
   );
 
   useEffectOnce(() => {

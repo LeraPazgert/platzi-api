@@ -6,7 +6,6 @@ import {
   Typography,
 } from '@mui/material';
 import { FC } from 'react';
-import { ProductsFilter } from '../../../modules/products';
 
 type Props = {
   label: string;
@@ -14,10 +13,11 @@ type Props = {
     value: string;
     label: string;
   }[];
-  filter: ProductsFilter;
-  sort: any;
+  initValue: string;
+  onChange: (event: any) => void;
 };
-export const SortGroup: FC<Props> = ({ label, filter, sort, values }) => {
+
+export const SortGroup: FC<Props> = ({ label, initValue, onChange, values }) => {
   return (
     <FormControl
       sx={{
@@ -26,14 +26,14 @@ export const SortGroup: FC<Props> = ({ label, filter, sort, values }) => {
       }}
     >
       <Typography variant="overline">{label}</Typography>
-      <RadioGroup value={filter.sort} name="radio-buttons-group">
+      <RadioGroup value={initValue} name="radio-buttons-group">
         {values.map(item => (
           <FormControlLabel
             key={item.value}
             value={item.value}
             control={<Radio />}
             label={item.label}
-            onChange={sort}
+            onChange={onChange}
           />
         ))}
       </RadioGroup>

@@ -37,7 +37,7 @@ export const ProductItem: FC<Props> = ({ product }) => {
       >
         <Slider
           items={product.images.map((img, i) => (
-            <Picture image={img} key={i} />
+            <Picture image={img} key={i} height="200px" />
           ))}
         />
         <Box
@@ -47,7 +47,7 @@ export const ProductItem: FC<Props> = ({ product }) => {
             top: '8px',
             left: '16px',
             minWidth: '25px',
-            backgroundColor: 'rgb(5,5,5,0.2)',
+            backgroundColor: theme => theme.palette.secondary.light,
             borderRadius: '5px',
           }}
         >
