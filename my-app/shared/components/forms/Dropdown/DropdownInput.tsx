@@ -21,12 +21,13 @@ interface IDropdownInputProps<T extends FieldValues> {
   fieldName: Path<T>;
   registerOptions?: RegisterOptions;
   options: Option[];
+  disabled: boolean;
 }
 
 export const DropdownInput = <T extends FieldValues>(
   props: IDropdownInputProps<T>,
 ): ReactElement | null => {
-  const { label, form, fieldName, registerOptions, helperText, options } = props;
+  const { label, form, fieldName, registerOptions, helperText, options, disabled } = props;
 
   const errorMessage = form.formState.errors[fieldName]?.message as string;
   const errorHelper = errorMessage || helperText;
@@ -39,7 +40,7 @@ export const DropdownInput = <T extends FieldValues>(
       render={({ field }) => (
         <TextField {...field} select label={label} error={!!errorMessage} helperText={errorHelper}>
           {options.map(option => (
-            <MenuItem key={option.value} value={option.value}>
+            <MenuItem key={option.value} value={option.value} disabled={disabled}>
               {option.label}
             </MenuItem>
           ))}

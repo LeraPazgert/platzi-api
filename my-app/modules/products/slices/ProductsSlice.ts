@@ -39,13 +39,10 @@ export const ProductsSlice = createSlice({
         ...state.filter,
         ...action.payload,
       };
-
-      const products = [...state.products];
-      const foundProducts = searchProducts(products, state.filter.text);
-      const sortedProducts = sortProducts(foundProducts, state.filter.sort);
-      const filteredByCategory = filterByCategory(sortedProducts, state.filter.categories);
-      const filteredByPrice = filterByPrice(filteredByCategory, state.filter.prices);
-      state.filteredProducts = filteredByPrice;
+      state.filteredProducts = sortProducts(
+        filteredItems(state.products as IProduct[], state.filter),
+        state.filter.sort,
+      );
     },
   },
 });
@@ -55,7 +52,50 @@ export default reducer;
 export const { setIsLoading, setProductsList, setProductsListError, setFilter, deleteProduct } =
   actions;
 
-const searchProducts = (initProducts: IProduct[], text: string) => {
+const filteredItems = (initProducts: IProduct[], filter: ProductsFilter) => {
+  return initProducts?.filter(p => {
+    const matchByCategory = !filter.categories.length || filter?.categories.includes(p.category.id);
+
+    const matchBySearch =
+      !filter.text ||
+      filter.text.length < 3 ||
+      p.title.toLowerCase().includes(filter.text.toLowerCase());
+
+    const matchByPrice =
+      !filter.prices.length || (p.price >= filter.prices[0] && p.price <= filter.prices[1]);
+
+    return matchByCategory && matchByPrice && matchBySearch;
+  });
+};
+
+const sortProducts = (initProducts: IProduct[], sort: string) => {
+  switch (sort) {
+    case 'name,asc':
+      return initProducts.sort((a, b) => {
+        return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;
+      });
+
+    case 'name,desc':
+      return initProducts.sort((a, b) => {
+        return b.title.toLowerCase() > a.title.toLowerCase() ? 1 : -1;
+      });
+
+    case 'price,asc':
+      return initProducts.sort((objA, objB) => {
+        return objA.price - objB.price;
+      });
+
+    case 'price,desc':
+      return initProducts.sort((objA, objB) => {
+        return objB.price - objA.price;
+      });
+
+    default:
+      return initProducts;
+  }
+};
+
+/* const searchProducts = (initProducts: IProduct[], text: string) => {
   if (text === '' || text.length < 3) {
     return initProducts;
   } else {
@@ -63,9 +103,9 @@ const searchProducts = (initProducts: IProduct[], text: string) => {
       (item.title || '').toLowerCase().includes(text.toLowerCase()),
     );
   }
-};
+}; */
 
-const sortProducts = (initProducts: IProduct[], sort: string) => {
+/* const sortProducts = (initProducts: IProduct[], sort: string) => {
   switch (sort) {
     case 'name,asc':
       return initProducts.sort((a, b) => {
@@ -106,4 +146,4 @@ const filterByPrice = (initProducts: IProduct[], prices: number[]) => {
   } else {
     return initProducts;
   }
-};
+}; */

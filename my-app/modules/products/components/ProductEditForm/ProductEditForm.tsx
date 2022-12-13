@@ -114,6 +114,7 @@ export const ProductEditForm: FC<Props> = ({ product, save }) => {
               }}
             />
             <DropdownInput
+              disabled={true}
               form={form}
               label="Category"
               fieldName="categoryId"
