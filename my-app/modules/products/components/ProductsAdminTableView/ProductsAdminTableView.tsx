@@ -8,9 +8,14 @@ import {
   useAppUrlBuilderContext,
 } from '../../../../shared';
 import { useProductListController } from '../../controllers';
+import {
+  ProductsCategoriesTable,
+  useProductsCategoriesTableController,
+} from '../ProductsCategoriesTable';
 
 export const ProductsAdminTableView = () => {
   const { products, page, changePageSize, remove } = useProductListController();
+  const { dataModel } = useProductsCategoriesTableController(products);
   const appUrlBuilder = useAppUrlBuilderContext();
   return (
     <>
@@ -18,17 +23,17 @@ export const ProductsAdminTableView = () => {
         <Box sx={{ display: 'flex', justifyContent: 'end' }}>
           <Button
             sx={{
-              margin: '0 25px 20px 0',
+              margin: '0 21px 20px 0',
               backgroundColor: (theme: any) => theme.palette.secondary.dark,
             }}
           >
-            +
+            ADD NEW
           </Button>
         </Box>
       </Link>
       <Table
         columns={[
-          { title: 'ID', key: 'id', minWidth: 70, align: 'center' },
+          { title: 'ID', key: 'id', minWidth: 200, align: 'center' },
           {
             title: 'Title',
             key: r => (
@@ -47,7 +52,7 @@ export const ProductsAdminTableView = () => {
             align: 'center',
           },
 
-          { title: 'Price', key: r => <>$ {r.price}</>, minWidth: 100, align: 'center' },
+          { title: 'Price', key: r => <>$ {r.price}</>, minWidth: 200, align: 'center' },
           {
             title: 'Actions',
             key: r => (
@@ -58,14 +63,16 @@ export const ProductsAdminTableView = () => {
                 actionLabelSecond="Edit"
               />
             ),
-            minWidth: 100,
+            minWidth: 200,
             align: 'center',
           },
         ]}
+        mainCells={['Product', 'Details']}
         records={products}
         page={page}
         changePageSize={changePageSize}
       />
+      <ProductsCategoriesTable productsByCategory={dataModel} />
     </>
   );
 };

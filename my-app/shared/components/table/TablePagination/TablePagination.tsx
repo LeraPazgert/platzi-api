@@ -5,6 +5,7 @@ type Props = {
   page: number;
   changePageSize: any;
 };
+
 export const AdminTablePagination: FC<Props> = ({ page, changePageSize }) => {
   return (
     <Box>

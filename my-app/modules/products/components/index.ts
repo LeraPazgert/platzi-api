@@ -5,3 +5,4 @@ export * from './ProductsFilters';
 export * from './ProductsPriceRangeView';
 export * from './ProductsAdminTableView';
 export * from './ProductEditForm';
+export * from './ProductsCategoriesTable';
